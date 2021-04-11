@@ -12,7 +12,7 @@ using iText.Layout.Properties;
 
 namespace PDFGenerationInCSharp
 {
-    public class iText7Demo_not_working
+    public class iText7Demo
     {
         //https://kb.itextpdf.com/home/it7kb/examples/itext-7-jump-start-tutorial-chapter-1#c01e01_helloworld.cs
         public static void CreatePDF()
@@ -21,7 +21,14 @@ namespace PDFGenerationInCSharp
             PdfWriter writer = new PdfWriter("demo.pdf");
             PdfDocument pdf = new PdfDocument(writer);
             Document document = new Document(pdf);
-            Paragraph header = new Paragraph("HEADER")
+
+            // you need to ignore exceptions thrown from itext.io.dll which handles the
+            // errors internally, meanwhile visual studio will still breaks and hinders
+            // a proper generation process.
+            //
+            // https://csharpforums.net/threads/using-a-winform-to-create-a-pdf-using-itext7.6406/
+            // (last few posts)
+            Paragraph header = new Paragraph("hello world")
                 .SetTextAlignment(TextAlignment.CENTER)
                 .SetFontSize(20);
 
@@ -29,6 +36,7 @@ namespace PDFGenerationInCSharp
             document.Close();
         }
 
+        /* alternative
         public static void ConvertHTML()
         {
             File.WriteAllText("input.html", Program.HTMLPage);
@@ -40,5 +48,6 @@ namespace PDFGenerationInCSharp
             ConverterProperties converterProperties = new ConverterProperties();
             HtmlConverter.ConvertToPdf(htmlSource, pdfDest, converterProperties);
         }
+        */
     }
 }
